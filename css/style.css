@@ -1,0 +1,191 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+/* Estilos do corpo */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #2aa2e7 25%, #0c17a8 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Estilos do container */
+.container {
+    background: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+}
+
+/* Estilos do título */
+.title {
+    text-align: center;
+    color: #0c17a8;
+    margin-bottom: 30px;
+    font-size: 28px;
+}
+/* Estilos do formulário */
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Estilos dos grupos de formulário */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Estilos dos rótulos */
+.form-group label {
+    color: #333;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+/* Estilos do campo de senha */
+.password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* Estilos do campo de senha */
+.password-wrapper input {
+    flex: 1;
+    padding-right: 45px;
+}
+
+/* Estilos do campo de senha */
+.form-group input {
+    padding: 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: border-color 0.3s;
+    width: 100%;
+}
+
+/* Estilos do campo de senha */
+.form-group input:focus {
+    outline: none;
+    border-color: #0f2fbe;
+}
+
+/* Estilos do campo erro */
+.form-group input.error {
+    border-color: #ff4444;
+}
+
+/* Estilos do botão de envio */
+.btn-submit {
+    padding: 12px;
+    background: linear-gradient(135deg, #18b1c5 25%, #0c17a8 100%);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.btn-submit:active {
+    transform: translateY(0);
+}
+
+.error-message {
+    color: #ff4444;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.password-requirements {
+    margin-top: 10px;
+    padding: 12px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    border-left: 3px solid #e0e0e0;
+    display: none;
+    min-height: 45px;
+}
+
+.password-requirements.show {
+    display: block;
+}
+
+.requirement-single {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #666;
+    transition: all 0.3s ease;
+}
+
+.requirement-single .icon {
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: #ff4444;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+}
+
+.requirement-single.valid .icon {
+    background-color: #22c55e;
+}
+
+.requirement-single.valid .text {
+    color: #22c55e;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    transition: color 0.3s;
+}
+
+.toggle-password:hover {
+    color: #0c17a8;
+}
+
+.toggle-password .eye-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.toggle-password.active .eye-open {
+    display: none;
+}
+
+.toggle-password.active .eye-closed {
+    display: block !important;
+}
