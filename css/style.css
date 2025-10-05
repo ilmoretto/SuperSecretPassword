@@ -61,7 +61,7 @@ body {
 /* Estilos do campo de senha */
 .password-wrapper input {
     flex: 1;
-    padding-right: 45px;
+    /* Remove o padding-right já que o toggle não está mais dentro */
 }
 
 /* Estilos do campo de senha */
@@ -157,35 +157,4 @@ body {
 
 .requirement-single.valid .text {
     color: #22c55e;
-}
-
-.toggle-password {
-    position: absolute;
-    right: 10px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #666;
-    transition: color 0.3s;
-}
-
-.toggle-password:hover {
-    color: #0c17a8;
-}
-
-.toggle-password .eye-icon {
-    width: 20px;
-    height: 20px;
-}
-
-.toggle-password.active .eye-open {
-    display: none;
-}
-
-.toggle-password.active .eye-closed {
-    display: block !important;
 }
