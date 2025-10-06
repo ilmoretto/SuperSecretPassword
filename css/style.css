@@ -39,6 +39,7 @@ body {
 
 /* Estilos dos grupos de formulário */
 .form-group {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -56,12 +57,16 @@ body {
     position: relative;
     display: flex;
     align-items: center;
+    /* garante que o botão do olho esteja acima do input para evitar sobreposição por outros elementos */
+    z-index: 0;
 }
 
 /* Estilos do campo de senha */
 .password-wrapper input {
     flex: 1;
-    /* Remove o padding-right já que o toggle não está mais dentro */
+    padding-right: 56px; /* espaço maior para garantir que o ícone do navegador não sobreponha o nosso botão */
+    position: relative;
+    z-index: 1; /* fica abaixo do botão do olho */
 }
 
 /* Estilos do campo de senha */
@@ -72,6 +77,25 @@ body {
     font-size: 14px;
     transition: border-color 0.3s;
     width: 100%;
+    position: relative;
+    z-index: 1;
+    /* remove aparências nativas do browser que possam sobrepor ícones */
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+/* Tentativas de esconder ícones nativos de "revelar senha" em diferentes navegadores */
+/* Edge/IE */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none;
+}
+
+/* Chrome / Chromium attempts (padrões de pseudo-elements podem variar entre versões) */
+input[type="password"]::-webkit-textfield-decoration-container,
+input[type="password"]::-webkit-password-toggle-button,
+input[type="password"]::-webkit-textfield-decoration {
+  display: none !important;
 }
 
 /* Estilos do campo de senha */
@@ -95,7 +119,14 @@ body {
     font-size: 16px;
     font-weight: 600;
     cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+}
+
+/* Visual para estado "desabilitado" (apenas visual) */
+.btn-submit.disabled {
+    opacity: 0.6;
+    transform: none;
+    cursor: pointer; /* ainda clicável para exibir erros */
 }
 
 .btn-submit:hover {
@@ -111,6 +142,9 @@ body {
     color: #ff4444;
     font-size: 12px;
     margin-top: 5px;
+    margin-bottom: 0;
+    position: static;
+    width: 100%;
 }
 
 .password-requirements {
@@ -157,4 +191,150 @@ body {
 
 .requirement-single.valid .text {
     color: #22c55e;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    transition: color 0.3s;
+    z-index: 3; /* garante que o botão do olho fique acima do input e de outros elementos próximos */
+    border-radius: 50%;
+}
+
+/* remove outline padrão do botão quando focado (evita efeitos visuais indesejados ao digitar) */
+.toggle-password:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.toggle-password:hover {
+    color: #0c17a8;
+}
+
+.toggle-password .eye-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.toggle-password.active .eye-open {
+    display: none;
+}
+
+.toggle-password.active .eye-closed {
+    display: block !important;
+}
+
+/* Estilização de carregamento - Início */
+.loader-overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(255,255,255,0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    z-index: 10;
+    display: none;
+}
+
+.loader {
+    border: 6px solid #e0e0e0;
+    border-top: 6px solid #0c17a8;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin-bottom: 12px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg);}
+    100% { transform: rotate(360deg);}
+}
+
+.loader-text {
+    color: #0c17a8;
+    font-weight: bold;
+    font-size: 16px;
+}
+/* Estilização de carregamento - Fim*/
+
+/* --- CAPTCHA (quebra-cabeça) --- */
+.captcha-modal {
+    position: fixed;
+    inset: 0;
+    display: none; /* visível apenas quando ativo */
+    justify-content: center;
+    align-items: center;
+    background: rgba(0,0,0,0.5);
+    z-index: 9999;
+}
+
+.captcha-modal[aria-hidden="false"] {
+    display: flex;
+}
+
+.captcha-card {
+    background: white;
+    padding: 18px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 520px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+}
+
+.captcha-stage {
+    position: relative;
+    margin-top: 12px;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+/* main canvas: imagem com hole */
+#mainCanvas {
+    border-radius: 6px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    max-width: 100%;
+    display: block;
+}
+
+/* piece canvas: arrastável */
+.piece-canvas {
+    position: absolute;
+    top: 0;
+    left: 12px; /* pos inicial - será atualizado por JS */
+    cursor: grab;
+    touch-action: none;
+    border-radius: 3px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+    user-select: none;
+}
+
+.captcha-message {
+    margin-top: 10px;
+    font-size: 13px;
+    color: #333;
+}
+
+/* estado de sucesso */
+.captcha-message.success {
+    color: #22c55e;
+}
+
+/* estado de erro */
+.captcha-message.error {
+    color: #ff4444;
 }
